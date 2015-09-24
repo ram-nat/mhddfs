@@ -41,7 +41,7 @@
 
 #include "debug.h"
 
-#include <uthash.h>
+#include "uthash.h"
 
 // getattr
 static int mhdd_stat(const char *file_name, struct stat *buf)
@@ -243,11 +243,11 @@ static int mhdd_readdir(
 
 	// free memory
 	HASH_ITER(hh, items_ht, item, tmp) {
+        HASH_DEL(items_ht, item);
 		free(item->name);
 		free(item->st);
 		free(item);
 	}
-	HASH_CLEAR(hh, items_ht);
 
 	for (i = 0; dirs[i]; i++)
 		free(dirs[i]);
